@@ -11,13 +11,13 @@ diabete_db = pd.read_csv('diabetes.csv')
 X=diabete_db.drop("Outcome",axis=1).values
 standard=StandardScaler()
 X_s=standard.fit_transform(X)
-breakpoint()
+#breakpoint()
 
 # load the model from disk
 loaded_model = pickle.load(open(filename, 'rb'))
 
 #predict
-def predict(data):        
+def predict1(data):        
     y_preds = loaded_model.predict(data)
 
     for i,val in enumerate(y_preds[0:20]):
@@ -26,4 +26,18 @@ def predict(data):
         else:
             print(f"{i}-Pas diabetique")
 
-predict(data=X_s)
+def predict2(data= 'diabetes.csv'): 
+    #data
+    diabete_db = pd.read_csv(data)
+
+    #standarisation of the series
+    X=diabete_db.drop("Outcome",axis=1).values
+    standard=StandardScaler()
+    X_s=standard.fit_transform(X) 
+          
+    y_preds = loaded_model.predict(X_s)
+
+    return y_preds
+
+
+#predict(data=X_s)
